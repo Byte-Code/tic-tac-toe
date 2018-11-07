@@ -8,9 +8,9 @@ e le actions definite in actions.js
 */
 
 const mapStateToProps = (state) => ({ 
-    history: state.history,
-    stepNumber: state.stepNumber,
-    xIsNext: state.xIsNext
+    history: state.gameReducer.history,
+    stepNumber: state.gameReducer.stepNumber,
+    xIsNext: state.gameReducer.xIsNext
 })
 
 const GameContainers = connect(

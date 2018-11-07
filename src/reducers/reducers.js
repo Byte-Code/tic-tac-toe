@@ -1,5 +1,7 @@
 import {MAKE_MOVE,JUMP_TO} from '../actions/actions';
-import {calculateWinner} from '../utility/utility'
+import {calculateWinner} from '../utility/utility';
+import { combineReducers } from 'redux'
+import { firebaseReducer } from 'react-redux-firebase'
 
 //Stato iniziale
 const initializeHistory = { history:[ { squares: Array(9).fill(null) } ],
@@ -7,7 +9,7 @@ const initializeHistory = { history:[ { squares: Array(9).fill(null) } ],
                             xIsNext:true
                         }
                         
-export const reducers = (state = initializeHistory, actions) => {        
+const gameReducer = (state = initializeHistory, actions) => {        
     switch (actions.type){        
         case MAKE_MOVE: 
             //Verifico se ho terminato la partita o cerca di cliccare su di una casella
@@ -25,8 +27,8 @@ export const reducers = (state = initializeHistory, actions) => {
                     squares: squares
                     }
                 ]),
-            stepNumber: state.stepNumber+1,
-            xIsNext: !state.xIsNext
+                stepNumber: state.stepNumber+1,
+                xIsNext: !state.xIsNext
             });            
         case JUMP_TO:     
             //Carica la history dello step selezionato       
@@ -40,4 +42,11 @@ export const reducers = (state = initializeHistory, actions) => {
     }
 }
 
-export default reducers
+
+// Add firebase to reducers
+const reducers = combineReducers({
+    firebase: firebaseReducer,
+    gameReducer
+  })
+
+  export default reducers

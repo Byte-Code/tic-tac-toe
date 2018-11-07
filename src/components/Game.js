@@ -3,7 +3,7 @@ import IncludeBoard from './IncludeBoard'
 import {calculateWinner} from '../utility/utility'
 
 //Componente che contiene l'intero gioco
-class Game extends React.Component {
+class Game extends React.Component {    
 
     render() {       
       const history = this.props.history;             //Prende la history completa
