@@ -5,7 +5,10 @@ import {calculateWinner} from '../utility/utility'
 //Componente che contiene l'intero gioco
 class Game extends React.Component {
 
-    render() {       
+    render() {
+
+      const gameName = this.props.match.params.gameName;
+
       const history = this.props.history;             //Prende la history completa
       const current = history[this.props.stepNumber]; //Current contiene la History alla mossa stepNumber     
       const winner = calculateWinner(current.squares); 
