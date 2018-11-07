@@ -1,0 +1,10 @@
+{
+
+  history: [ { squares } ], //Storia della partita
+  stepNumber, //Numero di mosse effettuate int
+  xIsNext     //Prossimo simbolo a muovere
+}
+      
+
+       
+       
