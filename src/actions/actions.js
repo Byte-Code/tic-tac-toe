@@ -1,3 +1,5 @@
+import firebaseService from '../utility/firebaseService'
+
 export const MAKE_MOVE = 'MAKE_MOVE'
 export const JUMP_TO = 'JUMP_TO'
 
