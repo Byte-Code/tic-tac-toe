@@ -9,15 +9,15 @@ import { reactReduxFirebase } from 'react-redux-firebase';
 import firebase from 'firebase';
 
 //Firebase config
-const firebaseConfig = {
-  apiKey: "AIzaSyDmpg2u0UDZ43r6L6yKRqzbOYMnleq7DDI",
-  authDomain: "trisreact.firebaseapp.com",
-  databaseURL: "https://trisreact.firebaseio.com",
-  projectId: "trisreact",
-  storageBucket: "trisreact.appspot.com",
-  messagingSenderId: "652776064586"
-}
-firebase.initializeApp(firebaseConfig);
+var config = {
+  apiKey: "AIzaSyAu8KeEUs8fQARDbhrHcnOrXDEuoHJdNPg",
+  authDomain: "tic-tac-toe-cde6b.firebaseapp.com",
+  databaseURL: "https://tic-tac-toe-cde6b.firebaseio.com",
+  projectId: "tic-tac-toe-cde6b",
+  storageBucket: "",
+  messagingSenderId: "755872751196"
+};
+firebase.initializeApp(config);
 
 //React-redux-firebase options
 const config = {
