@@ -1,7 +1,6 @@
 
 import firebase from 'firebase/app';
 require('firebase/database');
-
 var config = {
     apiKey: "AIzaSyAu8KeEUs8fQARDbhrHcnOrXDEuoHJdNPg",
     authDomain: "tic-tac-toe-cde6b.firebaseapp.com",
@@ -10,7 +9,6 @@ var config = {
     storageBucket: "",
     messagingSenderId: "755872751196"
 };
-
 firebase.initializeApp(config);
-
-export default firebase;
+export const firebaseDB = firebase.database();
+export const urlDB = config.databaseURL;

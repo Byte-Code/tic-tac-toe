@@ -1,41 +1,87 @@
-import {MAKE_MOVE,JUMP_TO} from '../actions/actions';
-import {calculateWinner} from '../utility/utility'
+import {
+    LOAD_GAME_DATE_REQUEST,
+    LOAD_GAME_DATE_SUCCESS,
+    LOAD_GAME_DATE_FAILURE, 
+    MAKE_MOVE,
+    HACK_STATE
+} from '../utility/actionsServices';
 
-//Stato iniziale
-const initializeHistory = { history:[ { squares: Array(9).fill(null) } ],
-                            stepNumber:0,
-                            xIsNext:true
-                        }
-                        
-export const reducers = (state = initializeHistory, actions) => {        
-    switch (actions.type){        
-        case MAKE_MOVE: 
-            //Verifico se ho terminato la partita o cerca di cliccare su di una casella
-            //già occupata
-            if (calculateWinner(actions.squares) || actions.squares[actions.i]) {
-                return Object.assign({}, state)
+
+export const reducers = (state = {}, actions) => {        
+    switch (actions.type){  
+        case LOAD_GAME_DATE_REQUEST:               
+            if(state.game !== undefined){                                                         
+                return Object.assign({}, state,{   
+                    game: {...state.game},
+                    userId:  state.userId, 
+                    isFetching: true
+                })         
+            }                 
+            else{
+                return Object.assign({}, state,{ 
+                    isFetching: true
+                })    
             }
-            const history = state.history.slice(0, state.stepNumber + 1); //carica tutta la history     
-            const current = history[history.length - 1];  //prende l'ultima square della history
-            const squares = current.squares.slice();      //copia l'ultima square della history  
-            squares[actions.i] = state.xIsNext ? "X" : "O";
-            return Object.assign({}, state,{                
-                history: history.concat([
-                    {
-                    squares: squares
-                    }
-                ]),
-            stepNumber: state.stepNumber+1,
-            xIsNext: !state.xIsNext
-            });            
+                                           
+        case LOAD_GAME_DATE_SUCCESS:                    
+                if(state.userId===undefined){                                                                                        
+                    return Object.assign({}, state,{                
+                        game:
+                            { 
+                                board: Array(9).fill(null),
+                                playerX: actions.playerX,
+                                playerO: actions.playerO
+                            },
+                        userId:  ( actions.playerO===null ? actions.playerX : actions.playerO), 
+                        isFetching: false                                              
+                    })
+                }
+
+                //Aggiorno lo state dell'utente X con i dati di playerO 
+                if((state.userId===state.game.playerX)&&(state.game.playerO===null)){
+                    return Object.assign({}, state,{                
+                        game:
+                            { 
+                                board: state.game.board,
+                                playerX: state.game.playerX,
+                                playerO: actions.playerO
+                            },
+                        userId:  state.userId, 
+                        isFetching: false                                              
+                    })
+                }   
+                
+                return state
+                                                         
+        case LOAD_GAME_DATE_FAILURE:             
+            return Object.assign({}, state,{                                                     
+                isFetching: false        
+            }); 
+                        
+        case HACK_STATE:
+            return Object.assign({}, state,{                                                     
+                game: {
+                    board: actions.board,
+                    playerX: actions.playerX,
+                    playerO: actions.playerO                    
+                },
+                userId: actions.userId, 
+                isFetching: false          
+            });
+                
+            
+        case MAKE_MOVE: 
+            if((state.game.playerX === state.userId) || (state.game.playerO === state.userId)){
+                return Object.assign({}, state,{ 
+                
+                });
+            }            
+            return state;                 
+        /*       
         case JUMP_TO:     
-            //Carica la history dello step selezionato       
-            const newHistory = state.history.slice(0, actions.step + 1);
-            return Object.assign({}, state,{                
-                history: newHistory,
-                stepNumber: actions.step,
-                xIsNext: (actions.step % 2) === 0
-            });                                   
+            //Carica la history dello step selezionato                  
+            return Object.assign({}, state,{ });                                   
+        */    
     default: return state;
     }
 }

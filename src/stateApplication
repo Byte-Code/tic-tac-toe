@@ -1,10 +1,8 @@
-{
-
-  history: [ { squares } ], //Storia della partita
-  stepNumber, //Numero di mosse effettuate int
-  xIsNext     //Prossimo simbolo a muovere
-}
-      
-
-       
-       
+game:
+    { 
+        board: Array(9).fill(null)
+        playerX: int
+        playerO: int
+    },
+userId: int
+isFetching: boolean

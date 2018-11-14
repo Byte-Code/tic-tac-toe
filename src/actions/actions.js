@@ -1,19 +1,31 @@
-import firebaseService from '../utility/firebaseService'
+import {urlDB} from '../utility/firebaseService';
+import {   
+    updateMatch,    
+    loadGameDataRequest    
+ } from '../utility/actionsServices';
 
-export const MAKE_MOVE = 'MAKE_MOVE'
-export const JUMP_TO = 'JUMP_TO'
+//Inizializza e Aggiorna 
+export const initAppAndUpdate = () => {
+    return dispatch => {           
+        dispatch(loadGameDataRequest());
+        const gameName = localStorage.getItem('gameName');
+        const urlMatch =  urlDB+"/Matches/"+gameName;        
+        return fetch(urlMatch+".json")
+        .then( 
+                    (response) => response.json(),
+                    (error) => console.log(error)
+                )
+        .then(
+            (json) =>  {                     
+                dispatch(updateMatch(json, urlMatch))                    
+            }                                
+        )
+        
+    }            
+}
 
-//Azione che permetti di effettuare una mossa
-export const makeMove = (i,squares) => ({
-    type: MAKE_MOVE,
-    i,
-    squares
-})
 
-//Azione che permette di effettuare un Jump nella history
-export const jumpTo = (step) => ({
-    type: JUMP_TO,
-    step
-})
 
+        
+        
 
