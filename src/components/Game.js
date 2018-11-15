@@ -1,9 +1,6 @@
 import React from 'react';
 import IncludeBoard from './IncludeBoard';
 import {calculateWinner} from '../utility/utility';
-import {firebaseDB} from '../utility/firebaseService';
-import fetch from 'cross-fetch';
-import {initState} from '../actions/actions'
 import uuidv1 from 'uuid/v1';
 
 //Componente che contiene l'intero gioco
@@ -11,55 +8,70 @@ class Game extends React.Component {
   
   componentWillMount(){  
     localStorage.setItem('gameName',this.props.match.params.gameName);       
-    const idUser= localStorage.getItem('userId'); 
-    if(idUser===null){  
+    const userId= localStorage.getItem('userId'); 
+    if(userId===null){  
       localStorage.setItem('userId',uuidv1());      
     }    
-    const intervalId =  setInterval(this.props.initAppAndUpdate,5000);   
+    const intervalId =  setInterval(this.props.initAppAndUpdate,1000);   
+  }
+
+  verifyMove = () => {
+    const userId= localStorage.getItem('userId');
+    return( 
+      (this.props.game!== undefined) && 
+      ((this.props.game.playerX !==null) && (this.props.game.playerO !== null))&&            
+      ((userId!=undefined) && (this.props.userId==userId))
+      )       
+  }
+
+  player () {
+    const userId= localStorage.getItem('userId');
+    if(this.props.game!== undefined){
+      if(this.props.game.playerX===userId) { return 'X' }
+      if(this.props.game.playerO===userId) { return 'O' }
+      return 'Spettatore'
+    }
   }
      
-  render() {
-        
-      //return(<div></div>)
-      /*
-      const history = this.props.history;             //Prende la history completa
-      const current = history[this.props.stepNumber]; //Current contiene la History alla mossa stepNumber     
-      const winner = calculateWinner(current.squares); 
-  
-      const moves = history.map((step, move) => {                   
-        const desc = move ?
-          'Go to move #' + move :
-          'Go to game start';
-        return (
-          <li key={move}>
-            <button onClick={() => this.props.jumpTo(move)}>{desc}</button>
-          </li>
-        );
-      });
-     
+  render() {   
+    
+    const gameUndefined = this.props.game === undefined;
+    console.log(gameUndefined)
+    if(!gameUndefined){
+      const board = this.props.game.board;  
+      const winner = calculateWinner(board);
 
-      //Setta la label che visualizza il prossimo segno a muovere
+      //Setta la label che visualizza il player o il vincitore 
       let status;
       if (winner) {
         status = "Winner: " + winner;        
-      } else {
-        status = "Next player: " + (this.props.xIsNext ? "X" : "O");
-      }
-      */      
-           
-      const board = (this.props.game === undefined ? Array(9).fill(null) : this.props.game.board);      
+      } 
+      else {
+        status = "Player " +this.player();;
+      } 
+
+
+      const canMove = this.verifyMove();            
       return (
         <div>            
           <IncludeBoard board={board}  
-                        //onClick={(i) => this.props.makeMove(i,board,idUser)}                       
-                        //status={status}
-                        //moves={moves}
+                        onClick={ (canMove) ? (i) => this.props.move(i) : (e) => alert('Non è possibile effettuare giocate')  }                                            
+                        status={status}                      
           />
         </div>
-      );
+      );  
     }
     
-    }
+    return (
+      <div> 
+        Prevedere schermata di caricamento
+      </div>
+      );
+    
+    
+  }
+    
+}
 
 
 export default Game

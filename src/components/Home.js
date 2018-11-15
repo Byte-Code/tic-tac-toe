@@ -1,5 +1,5 @@
 import React from 'react';
-import {newMatch} from '../utility/homeServices'
+import {newMatch} from '../services/homeServices'
 
 const Home = () =>{
     

@@ -2,9 +2,9 @@ import {
     LOAD_GAME_DATE_REQUEST,
     LOAD_GAME_DATE_SUCCESS,
     LOAD_GAME_DATE_FAILURE, 
-    MAKE_MOVE,
-    HACK_STATE
-} from '../utility/actionsServices';
+    UPDATE_STATE_BOARD,
+    LOAD_GAME_DATA
+} from '../services/actionsServices';
 
 
 export const reducers = (state = {}, actions) => {        
@@ -12,7 +12,9 @@ export const reducers = (state = {}, actions) => {
         case LOAD_GAME_DATE_REQUEST:               
             if(state.game !== undefined){                                                         
                 return Object.assign({}, state,{   
-                    game: {...state.game},
+                    game: {
+                        ...state.game
+                    },
                     userId:  state.userId, 
                     isFetching: true
                 })         
@@ -26,8 +28,7 @@ export const reducers = (state = {}, actions) => {
         case LOAD_GAME_DATE_SUCCESS:                    
                 if(state.userId===undefined){                                                                                        
                     return Object.assign({}, state,{                
-                        game:
-                            { 
+                        game: { 
                                 board: Array(9).fill(null),
                                 playerX: actions.playerX,
                                 playerO: actions.playerO
@@ -40,8 +41,7 @@ export const reducers = (state = {}, actions) => {
                 //Aggiorno lo state dell'utente X con i dati di playerO 
                 if((state.userId===state.game.playerX)&&(state.game.playerO===null)){
                     return Object.assign({}, state,{                
-                        game:
-                            { 
+                        game: { 
                                 board: state.game.board,
                                 playerX: state.game.playerX,
                                 playerO: actions.playerO
@@ -52,13 +52,24 @@ export const reducers = (state = {}, actions) => {
                 }   
                 
                 return state
-                                                         
+                
+        case UPDATE_STATE_BOARD:             
+                return Object.assign({}, state,{ 
+                    game:{
+                            board: actions.board,
+                            playerX: state.game.playerX,
+                            playerO: state.game.playerO
+                        },
+                    userId:  state.userId, 
+                    isFetching: false                                              
+                });
+
         case LOAD_GAME_DATE_FAILURE:             
             return Object.assign({}, state,{                                                     
                 isFetching: false        
-            }); 
+            });         
                         
-        case HACK_STATE:
+        case LOAD_GAME_DATA:
             return Object.assign({}, state,{                                                     
                 game: {
                     board: actions.board,
@@ -67,16 +78,8 @@ export const reducers = (state = {}, actions) => {
                 },
                 userId: actions.userId, 
                 isFetching: false          
-            });
-                
-            
-        case MAKE_MOVE: 
-            if((state.game.playerX === state.userId) || (state.game.playerO === state.userId)){
-                return Object.assign({}, state,{ 
-                
-                });
-            }            
-            return state;                 
+            });                            
+                        
         /*       
         case JUMP_TO:     
             //Carica la history dello step selezionato                  

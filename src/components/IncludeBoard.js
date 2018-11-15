@@ -9,15 +9,12 @@ const IncludeBoard = (props) =>{
         <div className="game-board">
             <Board
                 board={props.board}
-                //onClick={props.onClick}
+                onClick={props.onClick}
             />
-        </div>
-        {/*
+        </div>        
         <div className="game-info">
-            <div>{props.status}</div>
-            <ol>{props.moves}</ol>
-        </div>
-        */}
+            <div>{props.status}</div>            
+        </div>        
     </div>
     )
 }

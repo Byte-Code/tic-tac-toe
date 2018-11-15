@@ -9,8 +9,8 @@ const Square = (props) => {
         {props.value}
       </button>
     */
-      <button className="square" >
-        
+      <button className="square" onClick={props.onClick}>
+          {props.value}
       </button>
     );
   }

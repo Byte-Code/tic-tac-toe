@@ -19,3 +19,12 @@ export function calculateWinner(squares) {
     }
     return null;
 }
+
+export const countEl = (array,el) => {
+  var count = 0;
+  for(var i = 0; i < array.length; ++i){
+      if(array[i] === el)
+          count++;
+  }
+  return count;
+}
