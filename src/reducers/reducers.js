@@ -4,7 +4,7 @@ import {
     LOAD_GAME_DATE_FAILURE, 
     UPDATE_STATE_BOARD,
     LOAD_GAME_DATA
-} from '../services/actionsServices';
+} from '../actions/actions';
 
 
 export const reducers = (state = {}, actions) => {        
@@ -79,12 +79,7 @@ export const reducers = (state = {}, actions) => {
                 userId: actions.userId, 
                 isFetching: false          
             });                            
-                        
-        /*       
-        case JUMP_TO:     
-            //Carica la history dello step selezionato                  
-            return Object.assign({}, state,{ });                                   
-        */    
+                         
     default: return state;
     }
 }

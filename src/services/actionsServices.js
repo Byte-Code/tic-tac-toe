@@ -1,39 +1,8 @@
 import {calculateWinner,countEl} from '../utility/utility';
-
-export const LOAD_GAME_DATE_REQUEST = 'LOAD_GAME_DATE_REQUEST';
-export const LOAD_GAME_DATE_SUCCESS = 'LOAD_GAME_DATE_SUCCESS';
-export const LOAD_GAME_DATE_FAILURE = 'LOAD_GAME_DATE_FAILURE';
-export const LOAD_GAME_DATA = 'LOAD_GAME_DATA';
-export const UPDATE_STATE_BOARD = 'UPDATE_STATE_BOARD'
-export const MAKE_MOVE = 'MAKE_MOVE';
-export const JUMP_TO = 'JUMP_TO';
-
-export const loadGameDataRequest = () =>({
-    type: LOAD_GAME_DATE_REQUEST     
-});
-
-export const loadGameDataSuccess = (playerX,playerO) => ({
-    type: LOAD_GAME_DATE_SUCCESS,    
-    playerX,
-    playerO
-});
-
-export const loadGameDataError = () => ({
-    type: LOAD_GAME_DATE_FAILURE
-});
-
-export const loadGameData = (board, playerX, playerO, userId) =>({
-    type: LOAD_GAME_DATA,
-    board,
-    playerX,
-    playerO,
-    userId
-});
-
-export const updateStateBoard = (board) => ({
-    type: UPDATE_STATE_BOARD,
-    board
-});
+import {loadGameData,
+        updateStateBoard,
+        loadGameDataSuccess
+} from '../actions/actions'
 
 const board = {0:"",1:"",2:"",3:"",4:"",5:"",6:"",7:"",8:""};
 
@@ -97,8 +66,8 @@ export const updateDBandState = (urlMatch,json) => {
         //console.log('updateDBandState - idUser ',userId);            
         if(userId === json.playerX){
             if(json.playerO!==undefined){               
-               dispatch(loadGameData(json.board,json.playerX,json.playerO,json.playerX)); //hackero lo stato per i test
-               dispatch(updateStateBoard(json.board));
+               dispatch(loadGameData(json.board,json.playerX,json.playerO,json.playerX)); 
+               //dispatch(updateStateBoard(json.board));
             }                                           
         }
         else{        
@@ -115,8 +84,8 @@ export const updateDBandState = (urlMatch,json) => {
             }
             else{
                 if(json.playerO === userId){                 
-                   dispatch(loadGameData(json.board,json.playerX,json.playerO,json.playerO)); //hackero lo stato per i test
-                   dispatch(updateStateBoard(json.board));
+                   dispatch(loadGameData(json.board,json.playerX,json.playerO,json.playerO)); 
+                   //dispatch(updateStateBoard(json.board));
                 }
                 else{
                     //spettatore

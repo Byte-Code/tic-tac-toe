@@ -50,7 +50,6 @@ class Game extends React.Component {
         status = "Player " +this.player();;
       } 
 
-
       const canMove = this.verifyMove();            
       return (
         <div>            
@@ -64,10 +63,9 @@ class Game extends React.Component {
     
     return (
       <div> 
-        Prevedere schermata di caricamento
+        ...load
       </div>
       );
-    
     
   }
     

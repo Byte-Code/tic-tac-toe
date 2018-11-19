@@ -8,11 +8,11 @@ import GameContainers from './containers/GameContainers'
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from './components/Home'
 
+const reduxTools = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const store = createStore(
   reducers,
-  compose(
-      applyMiddleware(thunk),
-      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  reduxTools(
+      applyMiddleware(thunk)
   )
 );
 
