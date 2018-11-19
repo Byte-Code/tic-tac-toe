@@ -12,19 +12,10 @@ class Game extends React.Component {
     if(userId===null){  
       localStorage.setItem('userId',uuidv1());      
     }    
-    const intervalId =  setInterval(this.props.initAppAndUpdate,1000);   
+    const intervalId =  setInterval(this.props.readDataMatch,1000);   
   }
 
-  verifyMove = () => {
-    const userId= localStorage.getItem('userId');
-    return( 
-      (this.props.game!== undefined) && 
-      ((this.props.game.playerX !==null) && (this.props.game.playerO !== null))&&            
-      ((userId!=undefined) && (this.props.userId==userId))
-      )       
-  }
-
-  player () {
+  symbolPlayer () {
     const userId= localStorage.getItem('userId');
     if(this.props.game!== undefined){
       if(this.props.game.playerX===userId) { return 'X' }
@@ -36,7 +27,7 @@ class Game extends React.Component {
   render() {   
     
     const gameUndefined = this.props.game === undefined;
-    console.log(gameUndefined)
+    
     if(!gameUndefined){
       const board = this.props.game.board;  
       const winner = calculateWinner(board);
@@ -47,14 +38,12 @@ class Game extends React.Component {
         status = "Winner: " + winner;        
       } 
       else {
-        status = "Player " +this.player();;
-      } 
-
-      const canMove = this.verifyMove();            
+        status = "Player " +this.symbolPlayer();
+      }                 
       return (
         <div>            
           <IncludeBoard board={board}  
-                        onClick={ (canMove) ? (i) => this.props.move(i) : (e) => alert('Non è possibile effettuare giocate')  }                                            
+                        onClick={ (i) => this.props.move(i) }                                            
                         status={status}                      
           />
         </div>
