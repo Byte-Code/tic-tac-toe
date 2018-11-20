@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import Game from '../components/Game';
-import {readDataMatch,move} from '../services/actionsServices';
+import {readDataMatch,executeMove} from '../services/matchServices';
 
 /* 
 Wrappa il componente Game e permette di usare le proprietà in mapStateToProps
@@ -15,8 +15,7 @@ const GameContainers = connect(
     mapStateToProps,
     {                  
         readDataMatch: readDataMatch, 
-        move : move
-            
+        executeMove : executeMove            
     }
   )(Game)
   

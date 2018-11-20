@@ -6,7 +6,7 @@ import uuidv1 from 'uuid/v1';
 //Componente che contiene l'intero gioco
 class Game extends React.Component {
   
-  componentWillMount(){  
+  componentDidMount(){  
     localStorage.setItem('gameName',this.props.match.params.gameName);       
     const userId= localStorage.getItem('userId'); 
     if(userId===null){  
@@ -26,7 +26,7 @@ class Game extends React.Component {
      
   render() {   
     
-    const gameUndefined = this.props.game === undefined;
+    const gameUndefined = this.props.game === undefined;    
     
     if(!gameUndefined){
       const board = this.props.game.board;  
@@ -43,7 +43,7 @@ class Game extends React.Component {
       return (
         <div>            
           <IncludeBoard board={board}  
-                        onClick={ (i) => this.props.move(i) }                                            
+                        onClick={ (i) => this.props.executeMove(i,this.props.game) }                                            
                         status={status}                      
           />
         </div>
@@ -59,6 +59,5 @@ class Game extends React.Component {
   }
     
 }
-
 
 export default Game

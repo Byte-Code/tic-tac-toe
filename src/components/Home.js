@@ -1,5 +1,4 @@
 import React from 'react';
-import {newMatch} from '../services/homeServices'
 
 const Home = () =>{
     
@@ -7,10 +6,7 @@ const Home = () =>{
         <div>
             <div>
                 <h2>HOME</h2>
-            </div>
-            <div>
-                <button onClick={(e) => newMatch()}>Gioca</button>
-            </div>
+            </div>            
         </div>
     )
 }

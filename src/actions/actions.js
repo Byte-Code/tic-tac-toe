@@ -26,7 +26,7 @@ export const loadGameData = (board, playerX, playerO, userId) =>({
     userId
 });
 
-export const updateStateBoard = (board) => ({
+export const makeMove = (board) => ({
     type: UPDATE_STATE_BOARD,
     board
 });
